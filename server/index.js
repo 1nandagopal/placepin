@@ -6,6 +6,7 @@ const { mongoConnect } = require("./utils/mongo");
 const app = express();
 
 app.use(morgan("dev"));
+app.use(express.json());
 
 app.use((error, req, res, next) => {
   if (res.headerSent) return next(error);
