@@ -25,3 +25,15 @@ module.exports.signupUser = async (req, res, next) => {
 
   return res.status(201).json({ userId: newUser.id, email: newUser.email });
 };
+
+//User Login
+
+module.exports.loginUser = async (req, res, next) => {
+  const { email, password } = req.body;
+
+  const user = await User.findOne({ email });
+  if (!user || !(await bcrypt.compare(password, user.password)))
+    return next(new CustomError("Invalid credentails", 401));
+
+  return res.status(200).json({ userId: user.id, email: user.email });
+};
