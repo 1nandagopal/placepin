@@ -1,6 +1,6 @@
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-
+const { validationResult } = require("express-validator");
 require("dotenv").config();
 
 const User = require("../models/users.model");
@@ -9,7 +9,10 @@ const CustomError = require("../models/customError");
 //User SignUp
 
 module.exports.signupUser = async (req, res, next) => {
-  console.log("reached");
+  const { errors } = validationResult(req);
+  if (errors.length !== 0) {
+    return next(new CustomError(errors[0].msg, 422));
+  }
 
   const { userName, email, password } = req.body;
 
@@ -37,6 +40,11 @@ module.exports.signupUser = async (req, res, next) => {
 //User Login
 
 module.exports.loginUser = async (req, res, next) => {
+  const { errors } = validationResult(req);
+  if (errors.length !== 0) {
+    return next(new CustomError(errors[0].msg, 422));
+  }
+
   const { email, password } = req.body;
 
   const user = await User.findOne({ email });
