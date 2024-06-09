@@ -14,6 +14,19 @@ module.exports.getAllPlaces = async (req, res, next) => {
     .json({ places: places.map((place) => place.toObject({ getters: true })) });
 };
 
+//Get a place by id
+
+module.exports.getPlaceById = async (req, res, next) => {
+  let place = await Place.findById(req.params.placeId).populate(
+    "creator",
+    "userName"
+  );
+
+  if (!place) return next(new CustomError("Place not found!", 404));
+
+  return res.status(200).json(place.toObject({ getters: true }));
+};
+
 //Create a place
 
 module.exports.createPlace = async (req, res, next) => {
