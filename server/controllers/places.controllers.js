@@ -44,8 +44,8 @@ module.exports.getPlacesByUserId = async (req, res, next) => {
 //Create a place
 
 module.exports.createPlace = async (req, res, next) => {
-  const { creator, title, description, address } = req.body;
-  // const creator = req.user.userId;
+  const { title, description, address } = req.body;
+  const creator = req.user.userId;
 
   const user = await User.findById(creator);
   if (!user)
@@ -70,4 +70,27 @@ module.exports.createPlace = async (req, res, next) => {
   await session.commitTransaction();
 
   return res.status(201).json(newPlace.toObject({ getters: true }));
+};
+
+//Update place
+
+module.exports.updatePlace = async (req, res, next) => {
+  const { title, description, address } = req.body;
+  const creator = req.user.userId;
+
+  let user = await User.findById(creator);
+  if (!user)
+    return next(new CustomError("User not found, can not update place.", 404));
+
+  let place = await Place.findById(req.params.placeId);
+  if (place.creator.toString() !== req.user.userId)
+    return next(new CustomError("Unauthorised action.", 401));
+
+  place.title = title;
+  place.description = description;
+  place.address = address;
+
+  await place.save();
+
+  return res.status(200).json(place.toObject({ getters: true }));
 };
