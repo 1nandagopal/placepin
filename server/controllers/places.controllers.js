@@ -4,6 +4,18 @@ const User = require("../models/users.model");
 const Place = require("../models/places.model");
 const CustomError = require("../models/customError");
 
+//Get all places
+
+module.exports.getAllPlaces = async (req, res, next) => {
+  let places = await Place.find({}).populate("creator", "userName");
+
+  return res
+    .status(200)
+    .json({ places: places.map((place) => place.toObject({ getters: true })) });
+};
+
+//Create a place
+
 module.exports.createPlace = async (req, res, next) => {
   const { creator, title, description, address } = req.body;
   // const creator = req.user.userId;
