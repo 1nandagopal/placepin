@@ -27,6 +27,20 @@ module.exports.getPlaceById = async (req, res, next) => {
   return res.status(200).json(place.toObject({ getters: true }));
 };
 
+//Get place by userId.
+
+module.exports.getPlacesByUserId = async (req, res, next) => {
+  const { userId } = req.params;
+
+  let user = await User.findById(userId).populate("places");
+
+  if (!user) return next(new CustomError("User not found", 404));
+
+  return res.status(200).json({
+    places: user.places.map((place) => place.toObject({ getters: true })),
+  });
+};
+
 //Create a place
 
 module.exports.createPlace = async (req, res, next) => {
