@@ -33,6 +33,30 @@ const passwordValidations = () =>
     .matches(/\d/)
     .withMessage("Password must contain at least one digit");
 
+const titleValidations = () =>
+  body("title")
+    .notEmpty()
+    .bail()
+    .withMessage("Title cannot be empty")
+    .trim()
+    .matches(/^[A-Za-z0-9\s]*$/)
+    .withMessage("Title can only contain alphanumeric chars ");
+
+const descriptionValidations = () =>
+  body("description")
+    .notEmpty()
+    .bail()
+    .withMessage("Description cannot be empty");
+
+const addressValidations = () =>
+  body("address").notEmpty().bail().withMessage("Address cannot be empty");
+
+module.exports.placeValidations = [
+  titleValidations(),
+  descriptionValidations(),
+  addressValidations(),
+];
+
 module.exports.signupValidations = [
   userNameValidations(),
   emailValidations(),
