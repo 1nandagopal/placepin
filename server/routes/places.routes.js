@@ -9,6 +9,7 @@ const {
   getPlacesByUserId,
   createPlace,
   updatePlace,
+  deletePlace,
 } = require("../controllers/places.controllers");
 const CustomError = require("../models/customError");
 
@@ -33,5 +34,6 @@ placesRouter.use((req, res, next) => {
 
 placesRouter.post("/new", fileUpload.single("image"), createPlace);
 placesRouter.patch("/:placeId", updatePlace);
+placesRouter.delete("/:placeId", deletePlace);
 
 module.exports = placesRouter;

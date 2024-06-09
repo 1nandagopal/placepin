@@ -1,3 +1,4 @@
+const fs = require("fs");
 const mongoose = require("mongoose");
 
 const User = require("../models/users.model");
@@ -93,4 +94,32 @@ module.exports.updatePlace = async (req, res, next) => {
   await place.save();
 
   return res.status(200).json(place.toObject({ getters: true }));
+};
+
+//Delete place
+
+module.exports.deletePlace = async (req, res, next) => {
+  let place = await Place.findById(req.params.placeId).populate(
+    "creator",
+    "places"
+  );
+  if (!place) return next(new CustomError("Place not found.", 404));
+
+  if (place.creator.id !== req.user.userId)
+    return next(new CustomError("Unauthorised action.", 401));
+
+  const imgPath = place.image;
+
+  const session = await mongoose.startSession();
+  session.startTransaction();
+  await place.creator.places.pull(place);
+  await place.creator.save({ session });
+  await place.deleteOne({ session });
+  await session.commitTransaction();
+
+  fs.unlink(imgPath, (err) => {
+    if (err) console.log(err);
+  });
+
+  return res.status(200).json(place.toObject());
 };
