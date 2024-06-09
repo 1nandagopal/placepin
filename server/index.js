@@ -3,6 +3,7 @@ const express = require("express");
 
 const { mongoConnect } = require("./utils/mongo");
 const userRouter = require("./routes/users.routes");
+const placesRouter = require("./routes/places.routes");
 
 const app = express();
 
@@ -10,6 +11,7 @@ app.use(morgan("dev"));
 app.use(express.json());
 
 app.use("/api/user", userRouter);
+app.use("/api/places", placesRouter);
 
 app.use((error, req, res, next) => {
   if (res.headerSent) return next(error);
