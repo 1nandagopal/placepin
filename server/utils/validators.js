@@ -5,6 +5,7 @@ const userNameValidations = () =>
     .notEmpty()
     .bail()
     .withMessage("Username cannot be empty")
+    .trim()
     .isLength({ max: 15 })
     .withMessage("Username must be atmost 15 chars long")
     .matches(/^[a-zA-Z0-9]*$/)
@@ -46,10 +47,15 @@ const descriptionValidations = () =>
   body("description")
     .notEmpty()
     .bail()
-    .withMessage("Description cannot be empty");
+    .withMessage("Description cannot be empty")
+    .trim();
 
 const addressValidations = () =>
-  body("address").notEmpty().bail().withMessage("Address cannot be empty");
+  body("address")
+    .notEmpty()
+    .bail()
+    .withMessage("Address cannot be empty")
+    .trim();
 
 module.exports.placeValidations = [
   titleValidations(),

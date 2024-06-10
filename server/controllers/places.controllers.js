@@ -4,6 +4,7 @@ const mongoose = require("mongoose");
 const User = require("../models/users.model");
 const Place = require("../models/places.model");
 const CustomError = require("../models/customError");
+const { validationResult } = require("express-validator");
 
 //Get all places
 
@@ -45,6 +46,11 @@ module.exports.getPlacesByUserId = async (req, res, next) => {
 //Create a place
 
 module.exports.createPlace = async (req, res, next) => {
+  const { errors } = validationResult(req);
+  if (errors.length !== 0) {
+    return next(new CustomError(errors[0].msg, 422));
+  }
+
   const { title, description, address } = req.body;
   const creator = req.user.userId;
 
