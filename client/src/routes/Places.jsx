@@ -5,6 +5,7 @@ import PlaceList from "../components/PlaceList";
 function Places() {
   const [places, setPlaces] = useState([]);
   const { sendRequest, isLoading, error } = useHTTP();
+
   useEffect(() => {
     async function getAllPlaces() {
       try {
@@ -15,7 +16,8 @@ function Places() {
       }
     }
     getAllPlaces();
-  });
+  }, []);
+
   return (
     <div>
       {isLoading ? (
