@@ -2,6 +2,11 @@ import React, { useState } from "react";
 import useHTTP from "../hooks/useHTTP";
 import Form from "../components/Form";
 import Input from "../components/Input";
+import {
+  emailValidators,
+  passwordValidators,
+  userNameValidators,
+} from "../../utils/validators";
 
 function Auth() {
   const [isSignUpMode, setSignUpMode] = useState(false);
@@ -47,14 +52,21 @@ function Auth() {
             {isSignUpMode && (
               <Input
                 name="userName"
+                validators={userNameValidators}
                 label="Username"
                 placeholder="Provide a username"
               />
             )}
-            <Input name="email" label="Email" placeholder="user@providor.com" />
+            <Input
+              name="email"
+              validators={emailValidators}
+              label="Email"
+              placeholder="user@providor.com"
+            />
             <Input
               type="password"
               name="password"
+              validators={passwordValidators}
               label="Password"
               placeholder="Must be atleast 8 characters"
             />
