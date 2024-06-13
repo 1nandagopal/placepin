@@ -1,4 +1,7 @@
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import { GoPlusCircle } from "react-icons/go";
+
 import useHTTP from "../hooks/useHTTP";
 import PlaceList from "../components/PlaceList";
 
