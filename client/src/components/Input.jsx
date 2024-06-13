@@ -6,13 +6,20 @@ const className = {
 };
 
 function Input(props) {
-  function renderInput({ type = "text", placeholder }) {
+  function renderInput({
+    type = "text",
+    name,
+    register,
+    validators = {},
+    placeholder,
+  }) {
     switch (type) {
       case "text":
       case "password":
         return (
           <input
             type={type}
+            {...register(name, validators)}
             placeholder={placeholder}
             className={className.text}
           />
@@ -21,6 +28,7 @@ function Input(props) {
         return (
           <textarea
             rows="4"
+            {...register(name, validators)}
             placeholder={placeholder}
             className={className.text}
           />
@@ -29,6 +37,7 @@ function Input(props) {
         return (
           <input
             type={type}
+            {...register(name, validators)}
             accept=".png,.jpg,.jpeg"
             className={className.file}
           />
@@ -43,6 +52,9 @@ function Input(props) {
       <label className="text-sm">
         {props.label}
         {renderInput(props)}
+        <div className="mt-1 text-end text-red-400 text-xs h-4">
+          {props.errors?.message}
+        </div>
       </label>
     </div>
   );
