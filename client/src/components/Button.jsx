@@ -1,4 +1,5 @@
 import React from "react";
+import LoadingSpinner from "./LoadingSpinner";
 
 const colorVariants = {
   red: "bg-red-700 hover:bg-red-800 focus:ring-red-900 disabled:bg-red-700",
@@ -22,7 +23,7 @@ function Button({
       onClick={onClick}
       className={`text-base px-4 py-2 rounded-lg focus:ring-2 ${colorVariants[color]} ${classes}`}
     >
-      {children}
+      {isLoading ? <LoadingSpinner /> : children}
     </button>
   );
 }
