@@ -5,6 +5,12 @@ import Button from "../components/Button";
 import useHTTP from "../hooks/useHTTP";
 import { AuthContext } from "../context/authContext";
 import { useNavigate } from "react-router-dom";
+import {
+  addressValidators,
+  descriptionValidators,
+  imageValidators,
+  titleValidators,
+} from "../../utils/validators";
 
 function NewPlace() {
   const auth = useContext(AuthContext);
@@ -34,18 +40,26 @@ function NewPlace() {
       <Form onSubmit={handleFormSubmit}>
         <Input
           name="title"
+          validators={titleValidators}
           label="Title"
           placeholder="Enter place title here"
         />
-        <Input name="image" label="Upload image" type="file" />
+        <Input
+          name="image"
+          validators={imageValidators}
+          label="Upload image"
+          type="file"
+        />
         <Input
           name="description"
+          validators={descriptionValidators}
           label="Description"
           type="textarea"
           placeholder="Write place description here"
         />
         <Input
           name="address"
+          validators={addressValidators}
           label="Address"
           placeholder="Enter place address here"
         />

@@ -29,3 +29,23 @@ export const passwordValidators = {
     message: "Must contain atleast one lowercase, one uppercase and one digit",
   },
 };
+
+export const titleValidators = {
+  required: "Title is required.",
+  pattern: {
+    value: /^[A-Za-z0-9\s]*$/,
+    message: "Title can only contain alphanumeric chars.",
+  },
+};
+
+export const imageValidators = {
+  required: "Image is required.",
+};
+
+export const descriptionValidators = {
+  required: "Description is required.",
+};
+
+export const addressValidators = {
+  required: "Address is required.",
+};
