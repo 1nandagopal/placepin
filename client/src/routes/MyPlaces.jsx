@@ -2,9 +2,11 @@ import React, { useContext, useEffect, useState } from "react";
 import PlaceList from "../components/PlaceList";
 import useHTTP from "../hooks/useHTTP";
 import { AuthContext } from "../context/authContext";
+import DeleteModal from "../components/DeleteModal";
 
 function MyPlaces() {
   const [places, setPlaces] = useState([]);
+  const [deleteModal, setDeleteModal] = useState(false);
   const { sendRequest, error } = useHTTP();
   const auth = useContext(AuthContext);
 
@@ -20,10 +22,37 @@ function MyPlaces() {
     if (auth.isLoggedIn) getPlaces();
   }, [auth]);
 
+  const handleDeletePlace = (placeId) => {
+    setDeleteModal(placeId);
+  };
+
+  const deletePlace = async (id) => {
+    try {
+      await sendRequest(`/api/places/${id}`, "delete", null, {
+        Authorization: "Bearer " + auth.token,
+      });
+      setDeleteModal(false);
+      setPlaces((state) => state.filter((place) => place.id !== id));
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const closeDeleteModal = () => {
+    setDeleteModal(false);
+  };
+
   return (
     <div>
+      {deleteModal && (
+        <DeleteModal
+          id={deleteModal}
+          deletePlace={deletePlace}
+          closeModal={closeDeleteModal}
+        />
+      )}
       <h2 className="text-3xl my-4">My Places</h2>
-      <PlaceList places={places} />
+      <PlaceList places={places} deletePlace={handleDeletePlace} />
     </div>
   );
 }
