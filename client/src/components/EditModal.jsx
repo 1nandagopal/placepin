@@ -12,9 +12,9 @@ import {
   titleValidators,
 } from "../utils/validators";
 
-function EditModal({ placeId, closeModal }) {
+function EditModal({ placeId, updatePlace, closeModal }) {
   const [place, setPlace] = useState(null);
-  const { sendRequest } = useHTTP();
+  const { sendRequest, error } = useHTTP();
 
   useEffect(() => {
     const getPlaceById = async (placeId) => {
@@ -25,6 +25,12 @@ function EditModal({ placeId, closeModal }) {
     if (placeId) getPlaceById(placeId);
   }, []);
 
+  const handleSubmit = async (data) => {
+    const { title, address, description } = data;
+    await updatePlace({ id: placeId, title, address, description });
+    closeModal();
+  };
+
   const modal = (
     <div className="h-screen fixed top-0 left-0 w-full bg-black/70 z-10 text-white flex items-center justify-center">
       <div className="relative w-full max-w-3xl max-h-full rounded-lg border-2 border-gray-700 bg-gray-900 p-10">
@@ -33,7 +39,7 @@ function EditModal({ placeId, closeModal }) {
           className="absolute top-2 right-2 text-3xl cursor-pointer hover:text-red-500"
           onClick={closeModal}
         />
-        <Form>
+        <Form onSubmit={handleSubmit}>
           <Input
             name="title"
             validators={titleValidators}
@@ -53,6 +59,7 @@ function EditModal({ placeId, closeModal }) {
             label="Address"
             placeholder="Enter updated place address here"
           />
+          <div className="text-red-400 text-sm w-full h-6">{error}</div>
           <div className="flex justify-between">
             <Button color="red" onClick={closeModal}>
               Cancel
