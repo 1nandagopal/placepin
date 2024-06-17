@@ -1,18 +1,30 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 
 import { IoCloseOutline } from "react-icons/io5";
 import Form from "./Form";
 import Input from "./Input";
 import Button from "./Button";
-
+import useHTTP from "../hooks/useHTTP";
 import {
   addressValidators,
   descriptionValidators,
   titleValidators,
 } from "../utils/validators";
 
-function EditModal({ closeModal }) {
+function EditModal({ placeId, closeModal }) {
+  const [place, setPlace] = useState(null);
+  const { sendRequest } = useHTTP();
+
+  useEffect(() => {
+    const getPlaceById = async (placeId) => {
+      const response = await sendRequest(`/api/places/${placeId}`);
+      const { title, address, description } = response;
+      setPlace({ title, address, description });
+    };
+    if (placeId) getPlaceById(placeId);
+  }, []);
+
   const modal = (
     <div className="h-screen fixed top-0 left-0 w-full bg-black/70 z-10 text-white flex items-center justify-center">
       <div className="relative w-full max-w-3xl max-h-full rounded-lg border-2 border-gray-700 bg-gray-900 p-10">
@@ -42,7 +54,9 @@ function EditModal({ closeModal }) {
             placeholder="Enter updated place address here"
           />
           <div className="flex justify-between">
-            <Button color="red">Cancel</Button>
+            <Button color="red" onClick={closeModal}>
+              Cancel
+            </Button>
             <Button type="submit">Submit</Button>
           </div>
         </Form>
