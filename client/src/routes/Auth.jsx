@@ -26,7 +26,7 @@ function Auth() {
   const handleSubmit = async ({ email, password, userName }) => {
     try {
       if (isSignUpMode) {
-        const response = await sendRequest("/api/users/signup", "post", {
+        const response = await sendRequest("/api/user/signup", "post", {
           email,
           password,
           userName,
@@ -34,12 +34,12 @@ function Auth() {
         auth.login(response.token, response.userId);
         navigate("/");
       } else {
-        const response = await sendRequest("/api/users/login", "post", {
+        const response = await sendRequest("/api/user/login", "post", {
           email,
           password,
         });
         auth.login(response.token, response.userId);
-        navigate("/");
+        navigate("/myplaces");
       }
     } catch (err) {
       if (err) console.log(error);

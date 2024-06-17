@@ -39,7 +39,7 @@ function EditModal({ placeId, updatePlace, closeModal }) {
           className="absolute top-2 right-2 text-3xl cursor-pointer hover:text-red-500"
           onClick={closeModal}
         />
-        <Form onSubmit={handleSubmit}>
+        <Form onSubmit={handleSubmit} defaultValues={place}>
           <Input
             name="title"
             validators={titleValidators}

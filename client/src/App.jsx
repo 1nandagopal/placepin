@@ -10,7 +10,7 @@ function App() {
       <Routes>
         {/* <Route path="/" element={<Places />} /> */}
         <Route path="/new" element={<NewPlace />} />
-        <Route path="/" element={<MyPlaces />} />
+        <Route path="/myplaces" element={<MyPlaces />} />
         <Route path="/auth" element={<Auth />} />
       </Routes>
     </main>

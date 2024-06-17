@@ -8,6 +8,7 @@ import EditModal from "../components/EditModal";
 function MyPlaces() {
   const [places, setPlaces] = useState([]);
   const [deleteModal, setDeleteModal] = useState(false);
+  const [editModal, setEditModal] = useState(false);
   const { sendRequest, error } = useHTTP();
   const auth = useContext(AuthContext);
 
@@ -39,12 +40,44 @@ function MyPlaces() {
     }
   };
 
+  const updatePlace = async ({ id, title, address, description }) => {
+    try {
+      const response = await sendRequest(
+        `/api/places/${id}`,
+        "patch",
+        { title, address, description },
+        { Authorization: "Bearer " + auth.token }
+      );
+      setPlaces((state) =>
+        state.map((place) => (place.id === response.id ? response : place))
+      );
+      setEditModal(false);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const closeDeleteModal = () => {
     setDeleteModal(false);
   };
 
+  const handleEditPlace = (placeId) => {
+    setEditModal(placeId);
+  };
+
+  const closeEditModal = () => {
+    setEditModal(false);
+  };
+
   return (
     <div>
+      {editModal && (
+        <EditModal
+          placeId={editModal}
+          updatePlace={updatePlace}
+          closeModal={closeEditModal}
+        />
+      )}
       {deleteModal && (
         <DeleteModal
           id={deleteModal}
@@ -52,9 +85,12 @@ function MyPlaces() {
           closeModal={closeDeleteModal}
         />
       )}
-      <EditModal />
       <h2 className="text-3xl my-4">My Places</h2>
-      <PlaceList places={places} deletePlace={handleDeletePlace} />
+      <PlaceList
+        places={places}
+        editPlace={handleEditPlace}
+        deletePlace={handleDeletePlace}
+      />
     </div>
   );
 }
