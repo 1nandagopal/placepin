@@ -3,6 +3,7 @@ import PlaceList from "../components/PlaceList";
 import useHTTP from "../hooks/useHTTP";
 import { AuthContext } from "../context/authContext";
 import DeleteModal from "../components/DeleteModal";
+import EditModal from "../components/EditModal";
 
 function MyPlaces() {
   const [places, setPlaces] = useState([]);
@@ -51,6 +52,7 @@ function MyPlaces() {
           closeModal={closeDeleteModal}
         />
       )}
+      <EditModal />
       <h2 className="text-3xl my-4">My Places</h2>
       <PlaceList places={places} deletePlace={handleDeletePlace} />
     </div>
