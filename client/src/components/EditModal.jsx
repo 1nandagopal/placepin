@@ -6,6 +6,12 @@ import Form from "./Form";
 import Input from "./Input";
 import Button from "./Button";
 
+import {
+  addressValidators,
+  descriptionValidators,
+  titleValidators,
+} from "../utils/validators";
+
 function EditModal({ closeModal }) {
   const modal = (
     <div className="h-screen fixed top-0 left-0 w-full bg-black/70 z-10 text-white flex items-center justify-center">
@@ -18,17 +24,20 @@ function EditModal({ closeModal }) {
         <Form>
           <Input
             name="title"
+            validators={titleValidators}
             label="Title"
             placeholder="Enter updated place title here"
           />
           <Input
             name="description"
+            validators={descriptionValidators}
             label="Description"
             type="textarea"
             placeholder="Write updated place description here"
           />
           <Input
             name="address"
+            validators={addressValidators}
             label="Address"
             placeholder="Enter updated place address here"
           />

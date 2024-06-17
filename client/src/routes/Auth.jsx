@@ -8,7 +8,7 @@ import {
   emailValidators,
   passwordValidators,
   userNameValidators,
-} from "../../utils/validators";
+} from "../utils/validators";
 import { AuthContext } from "../context/authContext";
 import { useNavigate } from "react-router-dom";
 

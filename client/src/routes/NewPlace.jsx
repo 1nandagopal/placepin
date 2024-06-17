@@ -10,7 +10,7 @@ import {
   descriptionValidators,
   imageValidators,
   titleValidators,
-} from "../../utils/validators";
+} from "../utils/validators";
 
 function NewPlace() {
   const auth = useContext(AuthContext);
