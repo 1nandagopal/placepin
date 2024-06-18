@@ -4,6 +4,7 @@ import { GoPlusCircle } from "react-icons/go";
 
 import useHTTP from "../hooks/useHTTP";
 import PlaceList from "../components/PlaceList";
+import NavBar from "../components/NavBar";
 
 function Places() {
   const [places, setPlaces] = useState([]);
@@ -23,6 +24,7 @@ function Places() {
 
   return (
     <div>
+      <NavBar />
       {isLoading ? (
         "Loading"
       ) : places.length > 0 ? (
