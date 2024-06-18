@@ -11,6 +11,7 @@ import {
   imageValidators,
   titleValidators,
 } from "../utils/validators";
+import NavBar from "../components/NavBar";
 
 function NewPlace() {
   const auth = useContext(AuthContext);
@@ -40,40 +41,47 @@ function NewPlace() {
 
   return (
     auth.isLoggedIn && (
-      <div className="mx-auto max-w-3xl text-white">
-        <h2 className="my-4 text-3xl font-semibold">Add a new place</h2>
-        <Form onSubmit={handleFormSubmit}>
-          <Input
-            name="title"
-            validators={titleValidators}
-            label="Title"
-            placeholder="Enter place title here"
-          />
-          <Input
-            name="image"
-            validators={imageValidators}
-            label="Upload image"
-            type="file"
-          />
-          <Input
-            name="description"
-            validators={descriptionValidators}
-            label="Description"
-            type="textarea"
-            placeholder="Write place description here"
-          />
-          <Input
-            name="address"
-            validators={addressValidators}
-            label="Address"
-            placeholder="Enter place address here"
-          />
-          <div className="text-red-400 text-sm w-full h-6">{error}</div>
-          <Button type="submit" isLoading={isLoading} classes="text-base w-32">
-            Add Place
-          </Button>
-        </Form>
-      </div>
+      <>
+        <NavBar />
+        <div className="mx-auto max-w-3xl text-white">
+          <h2 className="my-4 text-3xl font-semibold">Add a new place</h2>
+          <Form onSubmit={handleFormSubmit}>
+            <Input
+              name="title"
+              validators={titleValidators}
+              label="Title"
+              placeholder="Enter place title here"
+            />
+            <Input
+              name="image"
+              validators={imageValidators}
+              label="Upload image"
+              type="file"
+            />
+            <Input
+              name="description"
+              validators={descriptionValidators}
+              label="Description"
+              type="textarea"
+              placeholder="Write place description here"
+            />
+            <Input
+              name="address"
+              validators={addressValidators}
+              label="Address"
+              placeholder="Enter place address here"
+            />
+            <div className="text-red-400 text-sm w-full h-6">{error}</div>
+            <Button
+              type="submit"
+              isLoading={isLoading}
+              classes="text-base w-32"
+            >
+              Add Place
+            </Button>
+          </Form>
+        </div>
+      </>
     )
   );
 }

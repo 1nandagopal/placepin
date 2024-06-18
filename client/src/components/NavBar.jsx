@@ -16,7 +16,7 @@ function NavBar() {
   };
 
   return (
-    <nav className="text-white flex items-center justify-between px-1 mb-5">
+    <nav className="text-white flex items-center justify-between mb-5">
       <Link to="/" className="group flex items-center">
         <TbLocation className="text-6xl mt-1 mr-1.5 group-hover:text-fuchsia-500 transition-all duration-300" />
         <h1 className="text-4xl font-semibold cursor-pointer bg-gradient-to-r from-blue-400 to-fuchsia-600  bg-white bg-clip-text bg-no-repeat bg-[length:0%] group-hover:bg-[length:100%] group-hover:text-transparent transition-all duration-300">
@@ -27,7 +27,7 @@ function NavBar() {
         {auth.isLoggedIn && (
           <>
             {pathname !== "/new" && (
-              <Link to="new">
+              <Link to="/new">
                 <Button classes="flex items-center">
                   <FaPlus className="mt-0.5 mr-1.5 h-4" />
                   New Place

@@ -4,6 +4,7 @@ import useHTTP from "../hooks/useHTTP";
 import { AuthContext } from "../context/authContext";
 import DeleteModal from "../components/DeleteModal";
 import EditModal from "../components/EditModal";
+import NavBar from "../components/NavBar";
 
 function MyPlaces() {
   const [places, setPlaces] = useState([]);
@@ -71,6 +72,7 @@ function MyPlaces() {
 
   return (
     <div>
+      <NavBar />
       {editModal && (
         <EditModal
           placeId={editModal}
@@ -85,12 +87,14 @@ function MyPlaces() {
           closeModal={closeDeleteModal}
         />
       )}
-      <h2 className="text-3xl my-4">My Places</h2>
-      <PlaceList
-        places={places}
-        editPlace={handleEditPlace}
-        deletePlace={handleDeletePlace}
-      />
+      <div className="py-1 px-2">
+        <h2 className="text-3xl my-4">My Places</h2>
+        <PlaceList
+          places={places}
+          editPlace={handleEditPlace}
+          deletePlace={handleDeletePlace}
+        />
+      </div>
     </div>
   );
 }
