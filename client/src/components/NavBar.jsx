@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import Button from "./Button";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { FaPlus } from "react-icons/fa6";
 import { TbLocation } from "react-icons/tb";
 import { AuthContext } from "../context/authContext";
@@ -8,6 +8,7 @@ import { AuthContext } from "../context/authContext";
 function NavBar() {
   const auth = useContext(AuthContext);
   const navigate = useNavigate();
+  const { pathname } = useLocation();
 
   const handleLogout = () => {
     auth.logout();
@@ -23,25 +24,36 @@ function NavBar() {
         </h1>
       </Link>
       <div className="mt-2 flex items-center space-x-5 text-sm">
-        <Link to="new">
-          <Button classes="flex items-center">
-            <FaPlus className="mt-0.5 mr-1.5 h-4" />
-            New Place
+        {auth.isLoggedIn && (
+          <>
+            {pathname !== "/new" && (
+              <Link to="new">
+                <Button classes="flex items-center">
+                  <FaPlus className="mt-0.5 mr-1.5 h-4" />
+                  New Place
+                </Button>
+              </Link>
+            )}
+            {pathname !== "/myplaces" && (
+              <Link to="/myplaces">
+                <Button>My Places</Button>
+              </Link>
+            )}
+          </>
+        )}
+        {auth.isLoggedIn ? (
+          <Button
+            color="red"
+            onClick={handleLogout}
+            classes="font-medium text-lg"
+          >
+            Log Out
           </Button>
-        </Link>
-        <Link to="/myplaces">
-          <Button>My Places</Button>
-        </Link>
-        <Button
-          color="red"
-          onClick={handleLogout}
-          classes="font-medium text-lg"
-        >
-          Log Out
-        </Button>
-        <Link to="/auth">
-          <Button>Log In</Button>
-        </Link>
+        ) : (
+          <Link to="/auth">
+            <Button classes="font-medium text-lg">Log In</Button>
+          </Link>
+        )}
       </div>
     </nav>
   );
