@@ -1,10 +1,19 @@
-import React from "react";
+import React, { useContext } from "react";
 import Button from "./Button";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { FaPlus } from "react-icons/fa6";
 import { TbLocation } from "react-icons/tb";
+import { AuthContext } from "../context/authContext";
 
 function NavBar() {
+  const auth = useContext(AuthContext);
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    auth.logout();
+    navigate("/");
+  };
+
   return (
     <nav className="text-white flex items-center justify-between px-1 mb-5">
       <Link to="/" className="group flex items-center">
@@ -23,7 +32,11 @@ function NavBar() {
         <Link to="/myplaces">
           <Button>My Places</Button>
         </Link>
-        <Button color="red" classes="font-medium text-lg">
+        <Button
+          color="red"
+          onClick={handleLogout}
+          classes="font-medium text-lg"
+        >
           Log Out
         </Button>
         <Link to="/auth">

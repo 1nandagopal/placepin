@@ -12,15 +12,15 @@ function Button({
   type = "button",
   disabled = false,
   isLoading,
-  onClick,
   color = "primary",
   classes = "",
+  ...props
 }) {
   return (
     <button
       type={type}
       disabled={disabled || isLoading}
-      onClick={onClick}
+      {...props}
       className={`text-base px-4 py-2 rounded-lg focus:ring-2 ${colorVariants[color]} ${classes}`}
     >
       {isLoading ? <LoadingSpinner /> : children}
