@@ -11,9 +11,30 @@ function App() {
     <main className="bg-gray-900 h-screen text-white p-8 overflow-auto">
       <Routes>
         <Route path="/" element={<Places />} />
-        <Route path="/new" element={<NewPlace />} />
-        <Route path="/myplaces" element={<MyPlaces />} />
-        <Route path="/auth" element={<Auth />} />
+        <Route
+          path="/new"
+          element={
+            <Suspense fallback="Loading...">
+              <NewPlace />
+            </Suspense>
+          }
+        />
+        <Route
+          path="/myplaces"
+          element={
+            <Suspense fallback="Loading...">
+              <MyPlaces />
+            </Suspense>
+          }
+        />
+        <Route
+          path="/auth"
+          element={
+            <Suspense fallback="Loading...">
+              <Auth />
+            </Suspense>
+          }
+        />
       </Routes>
     </main>
   );
