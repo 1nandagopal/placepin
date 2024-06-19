@@ -1,4 +1,6 @@
 import React from "react";
+import { twMerge } from "tailwind-merge";
+
 import LoadingSpinner from "./LoadingSpinner";
 
 const colorVariants = {
@@ -16,12 +18,20 @@ function Button({
   classes = "",
   ...props
 }) {
+  console.log(
+    twMerge(
+      `text-base px-4 py-2 rounded-lg focus:ring-2 ${colorVariants[color]} ${classes}`
+    )
+  );
+
   return (
     <button
       type={type}
       disabled={disabled || isLoading}
       {...props}
-      className={`text-base px-4 py-2 rounded-lg focus:ring-2 ${colorVariants[color]} ${classes}`}
+      className={twMerge(
+        `text-base px-4 py-2 rounded-lg focus:ring-2 ${colorVariants[color]} ${classes}`
+      )}
     >
       {isLoading ? <LoadingSpinner /> : children}
     </button>

@@ -1,9 +1,11 @@
 import React from "react";
 import { FaLocationDot } from "react-icons/fa6";
 import Button from "./Button";
+import { useLocation } from "react-router-dom";
 
 function PlaceItem({ place, editPlace, deletePlace }) {
   const { id, title, description, image, address, creator } = place;
+  const { pathname } = useLocation();
 
   const isEdittable = editPlace && deletePlace && true;
 
@@ -23,14 +25,14 @@ function PlaceItem({ place, editPlace, deletePlace }) {
           src={`http://localhost:5000/${image}`}
         />
         {isEdittable && (
-          <div className="absolute w-full bottom-0 flex gap-2 p-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
-            <Button onClick={handleEdit} classes="rounded-md py-1 px-0 flex-1">
+          <div className="absolute w-full bottom-0 flex gap-2 p-1 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+            <Button onClick={handleEdit} classes="rounded-md p-1 flex-1">
               EDIT
             </Button>
             <Button
               onClick={handleDelete}
               color="red"
-              classes="rounded-md py-1 px-0 flex-1"
+              classes="rounded-md p-1 flex-1"
             >
               DELETE
             </Button>
@@ -47,6 +49,9 @@ function PlaceItem({ place, editPlace, deletePlace }) {
           <h3 title={address} className="line-clamp-2 leading-tight">
             {address}
           </h3>
+          {pathname !== "/myplaces" && (
+            <span className="absolute -bottom-4">By {creator.userName}</span>
+          )}
         </div>
       </div>
     </div>

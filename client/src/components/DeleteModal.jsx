@@ -9,9 +9,9 @@ function DeleteModal({ id, deletePlace, closeModal }) {
 
   const modal = (
     <div className="h-screen fixed top-0 left-0 w-full bg-black/70 z-10 text-white flex items-center justify-center">
-      <div className="relative w-full max-w-xl max-h-full rounded-lg border-2 border-gray-700 bg-gray-900 p-10 space-y-5">
+      <div className="relative w-full max-w-xl max-h-full rounded-lg border-2 border-gray-700 bg-gray-900 px-10 pt-5 pb-10 space-y-5">
         <IoCloseOutline
-          className="absolute top-2 right-2 text-3xl cursor-pointer hover:text-red-500"
+          className="absolute top-3 right-3 text-3xl cursor-pointer hover:text-red-500"
           onClick={closeModal}
         />
         <h2 className="text-3xl font-semibold">Delete Place</h2>

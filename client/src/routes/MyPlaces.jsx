@@ -87,7 +87,7 @@ function MyPlaces() {
           closeModal={closeDeleteModal}
         />
       )}
-      <div className="py-1 px-2">
+      <div className="px-2">
         <h2 className="text-3xl my-4">My Places</h2>
         <PlaceList
           places={places}
