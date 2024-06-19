@@ -1,8 +1,10 @@
+import { lazy } from "react";
 import { Route, Routes } from "react-router-dom";
+
 import Places from "./routes/Places";
-import Auth from "./routes/Auth";
-import NewPlace from "./routes/NewPlace";
-import MyPlaces from "./routes/MyPlaces";
+const MyPlaces = lazy(() => import("./routes/MyPlaces"));
+const NewPlace = lazy(() => import("./routes/NewPlace"));
+const Auth = lazy(() => import("./routes/Auth"));
 
 function App() {
   return (
