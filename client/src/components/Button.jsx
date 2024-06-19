@@ -18,12 +18,6 @@ function Button({
   classes = "",
   ...props
 }) {
-  console.log(
-    twMerge(
-      `text-base px-4 py-2 rounded-lg focus:ring-2 ${colorVariants[color]} ${classes}`
-    )
-  );
-
   return (
     <button
       type={type}
