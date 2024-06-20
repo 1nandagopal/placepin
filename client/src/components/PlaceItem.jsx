@@ -41,7 +41,7 @@ function PlaceItem({ place, editPlace, deletePlace }) {
       </div>
       <div className="relative p-3 space-y-4 w-3/5 mb-6">
         <h1 className="text-2xl font-semibold capitalize">{title}</h1>
-        <p className="text-sm text-justify pr-2 h-24 line-clamp-5 group-hover:overflow-y-auto group-hover:line-clamp-none">
+        <p className="text-sm text-justify pr-2 h-24 break-words line-clamp-5 group-hover:overflow-y-auto group-hover:line-clamp-none">
           {description}
         </p>
         <div className="flex items-center gap-1">
