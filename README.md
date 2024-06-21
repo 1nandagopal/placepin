@@ -1,6 +1,6 @@
 # 📌PlacePin
 
-![image](https://github.com/user-attachments/assets/85e8683f-97b3-4524-ab39-c324fc8adac4)
+![image](https://github.com/user-attachments/assets/31fca1f8-3d79-45c1-ac67-173e753cae13)
 
 ## 📝 About the Project
 
