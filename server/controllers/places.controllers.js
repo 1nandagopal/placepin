@@ -5,7 +5,7 @@ const User = require("../models/users.model");
 const Place = require("../models/places.model");
 const CustomError = require("../models/customError");
 const { validationResult } = require("express-validator");
-const { uploadImage } = require("../utils/cloudinary");
+const { uploadImage, deleteImageUpload } = require("../utils/cloudinary");
 
 //Get all places
 
@@ -67,7 +67,7 @@ module.exports.createPlace = async (req, res, next) => {
   const newPlace = new Place({
     title,
     description,
-    image: image,
+    image,
     address,
     creator,
   });
@@ -124,6 +124,10 @@ module.exports.deletePlace = async (req, res, next) => {
   await place.creator.places.pull(place);
   await place.creator.save({ session });
   await place.deleteOne({ session });
+
+  const result = await deleteImageUpload(imgPath);
+  if (result.error) return next(new CustomError("Image deletion failed.", 500));
+
   await session.commitTransaction();
 
   fs.unlink(imgPath, (err) => {

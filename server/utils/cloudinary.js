@@ -16,3 +16,10 @@ module.exports.uploadImage = async (imageURL) => {
   });
   return result.public_id;
 };
+
+module.exports.deleteImageUpload = async (imageURL) => {
+  const result = await cloudinary.uploader.destroy(imageURL, {
+    resource_type: "image",
+  });
+  return result;
+};
