@@ -22,7 +22,7 @@ function PlaceItem({ place, editPlace, deletePlace }) {
       <div className="relative w-2/5">
         <img
           className="absolute w-full h-full object-cover object-bottom"
-          src={`http://localhost:5000/${image}`}
+          src={`https://res.cloudinary.com/dr34dquqh/image/upload/v1723301642/${image}`}
         />
         {isEdittable && (
           <div className="absolute w-full bottom-0 flex gap-2 p-1 opacity-0 group-hover:opacity-100 transition-opacity duration-200">

@@ -79,6 +79,10 @@ module.exports.createPlace = async (req, res, next) => {
   await user.save({ session });
   await session.commitTransaction();
 
+  fs.unlink(req.file.path, (err) => {
+    if (err) console.log(err);
+  });
+
   return res.status(201).json(newPlace.toObject({ getters: true }));
 };
 

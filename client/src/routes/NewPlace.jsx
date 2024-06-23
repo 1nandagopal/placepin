@@ -55,7 +55,7 @@ function NewPlace() {
             <Input
               name="image"
               validators={imageValidators}
-              label="Upload image"
+              label="Upload image (Max 1MB)"
               type="file"
             />
             <Input
