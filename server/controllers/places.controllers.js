@@ -5,6 +5,7 @@ const User = require("../models/users.model");
 const Place = require("../models/places.model");
 const CustomError = require("../models/customError");
 const { validationResult } = require("express-validator");
+const { uploadImage } = require("../utils/cloudinary");
 
 //Get all places
 
@@ -61,10 +62,12 @@ module.exports.createPlace = async (req, res, next) => {
   if (!req.file)
     return next(new CustomError("Image not found, can not create place.", 404));
 
+  const image = await uploadImage(req.file.path);
+
   const newPlace = new Place({
     title,
     description,
-    image: req.file.path,
+    image: image,
     address,
     creator,
   });

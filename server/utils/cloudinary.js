@@ -6,3 +6,13 @@ cloudinary.config({
   api_key: process.env.CLOUDINARY_KEY,
   api_secret: process.env.CLOUDINARY_SECRET,
 });
+
+module.exports.uploadImage = async (imageURL) => {
+  const result = await cloudinary.uploader.upload(imageURL, {
+    folder: "placepin",
+    resource_type: "image",
+    use_filename: true,
+    overwrite: false,
+  });
+  return result.public_id;
+};
