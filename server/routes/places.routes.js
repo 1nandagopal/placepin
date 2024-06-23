@@ -2,7 +2,6 @@ const express = require("express");
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
 
-const fileUpload = require("../utils/multer");
 const catchAsync = require("../utils/catchAsync");
 const {
   getAllPlaces,
@@ -14,6 +13,7 @@ const {
 } = require("../controllers/places.controllers");
 const CustomError = require("../models/customError");
 const { placeValidations } = require("../utils/validators");
+const uploadImage = require("../utils/multer");
 
 const placesRouter = express.Router();
 
@@ -35,7 +35,7 @@ placesRouter.use((req, res, next) => {
 
 placesRouter.post(
   "/new",
-  fileUpload.single("image"),
+  uploadImage("image"),
   placeValidations,
   catchAsync(createPlace)
 );

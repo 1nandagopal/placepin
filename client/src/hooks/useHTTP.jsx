@@ -18,7 +18,7 @@ function useHTTP() {
       return response.data;
     } catch (error) {
       setIsLoading(false);
-      setError(error.response.data.message || error.message);
+      setError(error?.response?.data.message || error.message);
       throw error;
     }
   };

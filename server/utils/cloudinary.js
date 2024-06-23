@@ -7,7 +7,7 @@ cloudinary.config({
   api_secret: process.env.CLOUDINARY_SECRET,
 });
 
-module.exports.uploadImage = async (imageURL) => {
+module.exports.uploadImageCloudinary = async (imageURL) => {
   const result = await cloudinary.uploader.upload(imageURL, {
     folder: "placepin",
     resource_type: "image",
@@ -17,7 +17,7 @@ module.exports.uploadImage = async (imageURL) => {
   return result.public_id;
 };
 
-module.exports.deleteImageUpload = async (imageURL) => {
+module.exports.deleteImageCloudinary = async (imageURL) => {
   const result = await cloudinary.uploader.destroy(imageURL, {
     resource_type: "image",
   });

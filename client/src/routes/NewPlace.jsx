@@ -34,8 +34,8 @@ function NewPlace() {
         }
       );
       navigate("/myplaces");
-    } catch (error) {
-      console.log(error);
+    } catch (err) {
+      if (err) console.log(err);
     }
   };
 

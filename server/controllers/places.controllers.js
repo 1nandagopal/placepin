@@ -3,9 +3,13 @@ const mongoose = require("mongoose");
 
 const User = require("../models/users.model");
 const Place = require("../models/places.model");
+const fileUpload = require("../utils/multer");
 const CustomError = require("../models/customError");
 const { validationResult } = require("express-validator");
-const { uploadImage, deleteImageUpload } = require("../utils/cloudinary");
+const {
+  uploadImageCloudinary,
+  deleteImageCloudinary,
+} = require("../utils/cloudinary");
 
 //Get all places
 
@@ -62,7 +66,7 @@ module.exports.createPlace = async (req, res, next) => {
   if (!req.file)
     return next(new CustomError("Image not found, can not create place.", 404));
 
-  const image = await uploadImage(req.file.path);
+  const image = await uploadImageCloudinary(req.file.path);
 
   const newPlace = new Place({
     title,
@@ -129,7 +133,7 @@ module.exports.deletePlace = async (req, res, next) => {
   await place.creator.save({ session });
   await place.deleteOne({ session });
 
-  const result = await deleteImageUpload(imgPath);
+  const result = await deleteImageCloudinary(imgPath);
   if (result.error) return next(new CustomError("Image deletion failed.", 500));
 
   await session.commitTransaction();
