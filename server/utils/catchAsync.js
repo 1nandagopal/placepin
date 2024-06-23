@@ -1,12 +1,11 @@
 const CustomError = require("../models/customError");
 
 const catchAsync = (cb) => {
-  return (req, res, next) => {
+  return async (req, res, next) => {
     try {
-      cb(req, res, next);
+      await cb(req, res, next);
     } catch (error) {
-      // console.log(error);
-      next(new CustomError(error.message, error.code));
+      return next(error);
     }
   };
 };
