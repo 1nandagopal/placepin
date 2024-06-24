@@ -10,7 +10,7 @@ const placesRouter = require("./routes/places.routes");
 const app = express();
 
 app.use(morgan("dev"));
-app.use(express.json());
+app.use(express.json({ limit: 1024 }));
 
 app.use("/uploads/images", express.static(path.join("uploads", "images")));
 app.use(express.static(path.join(__dirname, "..", "public")));
@@ -29,7 +29,7 @@ app.use("/api/user", userRouter);
 app.use("/api/places", placesRouter);
 
 app.use((error, req, res, next) => {
-  if (req.file) {
+  if (req.file && fs.existsSync(req.file)) {
     fs.unlink(req.file.path, (err) => {
       if (err) console.log(err);
     });
