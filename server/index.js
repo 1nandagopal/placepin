@@ -1,29 +1,23 @@
 const fs = require("fs");
+const cors = require("cors");
 const path = require("path");
-const morgan = require("morgan");
+const helmet = require("helmet");
 const express = require("express");
-
 const { mongoConnect } = require("./utils/mongo");
 const userRouter = require("./routes/users.routes");
 const placesRouter = require("./routes/places.routes");
 
 const app = express();
 
-app.use(morgan("dev"));
+app.use(helmet());
 app.use(express.json({ limit: 1024 }));
 
-app.use("/uploads/images", express.static(path.join("uploads", "images")));
-app.use(express.static(path.join(__dirname, "..", "public")));
-
-app.use((req, res, next) => {
-  res.setHeader("Access-Control-Allow-Origin", "*");
-  res.setHeader(
-    "Access-Control-Allow-Headers",
-    "Origin, X-Requested-With, Content-Type, Accept, Authorization"
-  );
-  res.setHeader("Access-Control-Allow-Methods", "GET, POST, PATCH, DELETE");
-  next();
-});
+app.use(
+  cors({
+    origin: "https://placepin.vercel.app/",
+    methods: ["GET", "POST", "PATCH", "DELETE", "OPTIONS"],
+  })
+);
 
 app.use("/api/user", userRouter);
 app.use("/api/places", placesRouter);
