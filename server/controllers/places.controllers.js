@@ -93,6 +93,11 @@ module.exports.createPlace = async (req, res, next) => {
 //Update place
 
 module.exports.updatePlace = async (req, res, next) => {
+  const { errors } = validationResult(req);
+  if (errors.length !== 0) {
+    return next(new CustomError(errors[0].msg, 422));
+  }
+
   const { title, description, address } = req.body;
   const creator = req.user.userId;
 
@@ -137,10 +142,6 @@ module.exports.deletePlace = async (req, res, next) => {
   if (result.error) return next(new CustomError("Image deletion failed.", 500));
 
   await session.commitTransaction();
-
-  fs.unlink(imgPath, (err) => {
-    if (err) console.log(err);
-  });
 
   return res.status(200).json(place.toObject());
 };

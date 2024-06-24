@@ -14,6 +14,7 @@ const {
 const CustomError = require("../models/customError");
 const { placeValidations } = require("../utils/validators");
 const uploadImage = require("../utils/multer");
+const { checkExact } = require("express-validator");
 
 const placesRouter = express.Router();
 
@@ -37,9 +38,15 @@ placesRouter.post(
   "/new",
   uploadImage("image"),
   placeValidations,
+  checkExact([], { message: "Unknown fields detected" }),
   catchAsync(createPlace)
 );
-placesRouter.patch("/:placeId", catchAsync(updatePlace));
+placesRouter.patch(
+  "/:placeId",
+  placeValidations,
+  checkExact([], { message: "Unknown fields detected" }),
+  catchAsync(updatePlace)
+);
 placesRouter.delete("/:placeId", catchAsync(deletePlace));
 
 module.exports = placesRouter;
