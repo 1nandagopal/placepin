@@ -14,7 +14,7 @@ app.use(express.json({ limit: 1024 }));
 
 app.use(
   cors({
-    origin: "https://placepin.vercel.app/",
+    origin: "https://placepin.vercel.app",
     methods: ["GET", "POST", "PATCH", "DELETE", "OPTIONS"],
   })
 );
