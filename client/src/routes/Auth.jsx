@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
+const { VITE_API_URL } = import.meta.env;
 
 import Form from "../components/Form";
 import useHTTP from "../hooks/useHTTP";
@@ -26,18 +27,26 @@ function Auth() {
   const handleSubmit = async ({ email, password, userName }) => {
     try {
       if (isSignUpMode) {
-        const response = await sendRequest("/api/user/signup", "post", {
-          email,
-          password,
-          userName,
-        });
+        const response = await sendRequest(
+          `${VITE_API_URL}/api/user/signup`,
+          "post",
+          {
+            email,
+            password,
+            userName,
+          }
+        );
         auth.login(response.token, response.userId);
         navigate("/");
       } else {
-        const response = await sendRequest("/api/user/login", "post", {
-          email,
-          password,
-        });
+        const response = await sendRequest(
+          `${VITE_API_URL}/api/user/login`,
+          "post",
+          {
+            email,
+            password,
+          }
+        );
         auth.login(response.token, response.userId);
         navigate("/myplaces");
       }

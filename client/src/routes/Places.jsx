@@ -1,3 +1,4 @@
+const { VITE_API_URL } = import.meta.env;
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { GoPlusCircle } from "react-icons/go";
@@ -13,7 +14,7 @@ function Places() {
   useEffect(() => {
     async function getAllPlaces() {
       try {
-        const response = await sendRequest("/api/places");
+        const response = await sendRequest(`${VITE_API_URL}/api/places`);
         setPlaces(response.places);
       } catch (err) {
         if (err) console.error(error);

@@ -1,3 +1,4 @@
+const { VITE_API_URL } = import.meta.env;
 import React, { useContext, useEffect } from "react";
 import Form from "../components/Form";
 import Input from "../components/Input";
@@ -25,7 +26,7 @@ function NewPlace() {
   const handleFormSubmit = async (data) => {
     try {
       await sendRequest(
-        "/api/places/new",
+        `${VITE_API_URL}/api/places/new`,
         "post",
         { ...data, image: data.image[0] },
         {

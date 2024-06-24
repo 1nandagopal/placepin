@@ -1,4 +1,6 @@
+const { VITE_API_URL } = import.meta.env;
 import React, { useContext, useEffect, useState } from "react";
+
 import PlaceList from "../components/PlaceList";
 import useHTTP from "../hooks/useHTTP";
 import { AuthContext } from "../context/authContext";
@@ -16,7 +18,9 @@ function MyPlaces() {
   useEffect(() => {
     const getPlaces = async () => {
       try {
-        const response = await sendRequest(`/api/places/user/${auth.userId}`);
+        const response = await sendRequest(
+          `${VITE_API_URL}/api/places/user/${auth.userId}`
+        );
         setPlaces(response.places);
       } catch (err) {
         if (err) console.error(error);
@@ -31,7 +35,7 @@ function MyPlaces() {
 
   const deletePlace = async (id) => {
     try {
-      await sendRequest(`/api/places/${id}`, "delete", null, {
+      await sendRequest(`${VITE_API_URL}/api/places/${id}`, "delete", null, {
         Authorization: "Bearer " + auth.token,
       });
       setDeleteModal(false);
@@ -44,7 +48,7 @@ function MyPlaces() {
   const updatePlace = async ({ id, title, address, description }) => {
     try {
       const response = await sendRequest(
-        `/api/places/${id}`,
+        `${VITE_API_URL}/api/places/${id}`,
         "patch",
         { title, address, description },
         { Authorization: "Bearer " + auth.token }

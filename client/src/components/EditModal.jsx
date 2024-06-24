@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from "react";
+const { VITE_API_URL } = import.meta.env;
 import { createPortal } from "react-dom";
+import React, { useEffect, useState } from "react";
 
 import { IoCloseOutline } from "react-icons/io5";
 import Form from "./Form";
@@ -18,7 +19,9 @@ function EditModal({ placeId, updatePlace, closeModal }) {
 
   useEffect(() => {
     const getPlaceById = async (placeId) => {
-      const response = await sendRequest(`/api/places/${placeId}`);
+      const response = await sendRequest(
+        `${VITE_API_URL}/api/places/${placeId}`
+      );
       const { title, address, description } = response;
       setPlace({ title, address, description });
     };
